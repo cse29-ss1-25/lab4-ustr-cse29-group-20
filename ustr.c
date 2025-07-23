@@ -38,11 +38,67 @@ Returns an empty string on invalid range.
 */
 UStr substring(UStr s, int32_t start, int32_t end) {
 	// TODO: implement this
-	char* result[s.bytes];
-	if (start > end || start < 0 || start >= s.bytes || end > s.codepoints) {
+	char result[s.bytes];
+	if (start > end || start < 0 || end < 0 || end > s.codepoints) {
 		result[0] = '\0';
 		return new_ustr(result);
 	}
+	if (s.bytes == 0 || s.contents == NULL) {
+		result[0] = '\0';
+		return new_ustr(result);
+	}
+
+	if (s.is_ascii) {
+		for(int i = start; i < end; i++) {
+		       result[i-start] = s.contents[i];
+		}	       
+	} else {
+		int byte_start = 0;
+		int byte_end = 0;
+
+		while(index < s.bytes) {
+			int size = utf8_codepoint_size(s.contents[index]);
+			if (size != -1) {
+				offset += size;
+			} 
+			index++;
+		}
+		while(
+		int32_t byte_start = 0;
+    iint32_t byte_start = 0;
+    int32_t byte_end = 0;
+    int32_t current_codepoint = 0;
+    uint8_t* ptr = (uint8_t*)s.contents;
+    
+    // Find starting byte position
+    while (current_codepoint < start && byte_start < s.bytes) {
+        int size = utf8_codepoint_size(ptr[byte_start]);
+        if (size == -1) {
+            // Invalid UTF-8, skip this byte
+            byte_start++;
+            continue;
+        }
+        byte_start += size;
+        current_codepoint++;
+    }
+    
+    // Find ending byte position
+    current_codepoint = start;
+    byte_end = byte_start;
+    while (current_codepoint < end && byte_end < s.bytes) {
+        int size = utf8_codepoint_size(ptr[byte_end]);
+        if (size == -1) {
+            // Invalid UTF-8, skip this byte
+            byte_end++;
+            continue;
+        }
+        byte_end += size;
+        current_codepoint++;
+    }int32_t byte_start = 0;
+    int32_t byte_end = 0;
+    int32_t current_codepoint = 0;
+    uint8_t* ptr = (uint8_t*)s.contents;
+    
 }
 
 /*

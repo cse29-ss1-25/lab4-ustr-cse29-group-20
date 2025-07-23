@@ -35,7 +35,7 @@ containing all the strings in list joined by the separator.
 */
 UStr join(List* list, UStr separator) {
     // TODO: implement this
-for(int i=0; )
+//for(int i=0; )
     
 }
 
