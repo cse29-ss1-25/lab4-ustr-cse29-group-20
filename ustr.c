@@ -47,7 +47,29 @@ concatenating s1 and s2.
 */
 UStr concat(UStr s1, UStr s2) {
 	// TODO: implement this
+	int total_bytes = s1.bytes + s2.bytes;
+    char* new_contents = malloc(total_bytes + 1);  // +1 for null terminator
 
+
+    // Copy s1 contents
+    for (int i = 0; i < s1.bytes; i++) {
+        new_contents[i] = s1.contents[i];
+    }
+
+    // Copy s2 contents
+    for (int i = 0; i < s2.bytes; i++) {
+        new_contents[i + s1.bytes] = s2.contents[i];
+    }
+
+    new_contents[total_bytes] = '\0';  // Null-terminate the new string
+
+    UStr result;
+    result.contents = new_contents;
+    result.bytes = total_bytes;
+    result.codepoints = s1.codepoints + s2.codepoints;
+    result.is_ascii = s1.is_ascii && s2.is_ascii;
+
+    return result;
 }
 
 /*
