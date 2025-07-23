@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include "../ustr.h"  
+
+int main() {
+    // Read first string
+    printf("Enter first string:\n");
+    UStr str1 = read_ustr(stdin);
+
+    // Read second string
+    printf("Enter second string:\n");
+    UStr str2 = read_ustr(stdin);
+
+    // Create space UStr
+    UStr space = new_ustr(" ");  
+
+    // Concatenate str1 + space
+    UStr temp = concat(str1, space);
+
+    // Concatenate the result + str2
+    UStr result = concat(temp, str2);
+
+    // Print final result
+    print_ustr(result);
+
+    // Free all allocated memory
+    free_ustr(str1);
+    free_ustr(str2);
+    free_ustr(space);
+    free_ustr(temp);
+    free_ustr(result);
+
+    return 0;
+}

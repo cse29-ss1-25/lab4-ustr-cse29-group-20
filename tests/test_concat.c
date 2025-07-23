@@ -1,29 +1,47 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../ustr.h"
 
-#include "ustr.h"
-
-/*
-concat two strings 
-*/
 int main() {
-    char input[256];
-    while (fgets(input, sizeof(input), stdin)) {
-        // Remove newline character if present
-        size_t l = strlen(input);
-        if (l > 0 && input[l - 1] == '\n') {
-            input[l - 1] = '\0';
+    char buf1[1024];
+    char buf2[1024];
+
+    // Read first string
+    if (fgets(buf1, sizeof(buf1), stdin) == NULL) return 1;
+    // Remove newline
+    int len1 = 0;
+    while (buf1[len1] != '\0') {
+        if (buf1[len1] == '\n') {
+            buf1[len1] = '\0';
+            break;
         }
-	UStr q = new_ustr(input);
-        UStr s = new_ustr(input);
-        UStr r = concat(q,s);
-        print_ustr(r);
-        printf("\n");
-        free_ustr(r);
-        free_ustr(s);
-	free_ustr(q);
+        len1++;
     }
+
+    // Read second string
+    if (fgets(buf2, sizeof(buf2), stdin) == NULL) return 1;
+    // Remove newline
+    int len2 = 0;
+    while (buf2[len2] != '\0') {
+        if (buf2[len2] == '\n') {
+            buf2[len2] = '\0';
+            break;
+        }
+        len2++;
+    }
+
+    // Create UStr objects
+    UStr str1 = new_ustr(buf1);
+    UStr str2 = new_ustr(buf2);
+
+    // Concatenate
+    UStr result = concat(str1, str2);
+    print_ustr(result);
+
+    // Free all allocated memory
+    free_ustr(str1);
+    free_ustr(str2);
+    free_ustr(result);
+
     return 0;
 }
 
