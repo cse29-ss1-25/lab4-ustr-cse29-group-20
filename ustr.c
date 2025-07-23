@@ -38,7 +38,11 @@ Returns an empty string on invalid range.
 */
 UStr substring(UStr s, int32_t start, int32_t end) {
 	// TODO: implement this
-
+	char* result[s.bytes];
+	if (start > end || start < 0 || start >= s.bytes || end > s.codepoints) {
+		result[0] = '\0';
+		return new_ustr(result);
+	}
 }
 
 /*
