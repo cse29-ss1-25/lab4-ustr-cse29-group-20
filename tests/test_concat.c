@@ -17,7 +17,7 @@ int main() {
         }
 	UStr q = new_ustr(input);
         UStr s = new_ustr(input);
-        UStr r = concat(s,q);
+        UStr r = concat(q,s);
         print_ustr(r);
         printf("\n");
         free_ustr(r);
